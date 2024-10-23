@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<style>
-            nav{
+         /*   nav{
                 float: top;
                 align-items: right;
                 width: 100%;
@@ -17,7 +17,7 @@
                 background: #ccc;
 
 
-            }
+            }*/
         </style>
         <title>
             Homepage
@@ -27,9 +27,16 @@
     </head>
     <body>
         <nav>
-            <input type="button" id="loginBtn"  value="Login" ></input>
+            <input type="button" id="loginBtn"  value="Login"  onclick=NavToLogInPage() ></input>
             <input type="button" id="signUpBtn" value="Sign up"></input>
         </nav>
+	    <script>
+            function NavToLogInPage(){
+                let newloc = "logIn.php";
+                window.location.replace(newloc);
+
+            }
+        </script>
         <catalog>
             <input type="search" id="itemSearch" value="Search..."></input>
             
