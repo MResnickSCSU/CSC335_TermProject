@@ -3,35 +3,33 @@ body {
 }
 
 .top {
-    background-color: white;
-    width: 95%; 
+    background-color: white; 
     padding: 10px;
     color: black;
     font-family: "Times New Roman", Times, serif;
     font-size: 50px;
     border-radius: 10px;
+    display: flex;
 }
 
-#title {
-    
+.accountButton {
+    margin-left: auto;
+    display: flex;
+}
+
+nav{
+    float: top;
+    align-items: right;
+    width: 100%;
+    height:50px;
 }
 
 .body{
-    width: 95%;
     background-color: white;
     margin-top: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    
-}
-
-.logInBox{
-    width: 95%;
-    margin-top: 10px;
-    background-color: white;
-    padding: 10px;
     border-radius: 10px;
     font-size: 20px;
+    display: flex;
 }
 
 .logInButton{
@@ -41,12 +39,55 @@ body {
     background-color: buttonface;
     text-decoration: none;
     font-size: 16px;
+    margin-right: 8px;
+    margin-bottom: auto;
 }
 
-#logInOpen {
-    background-color: buttonface;
-    color: black;
-    float: right; 
+.filter{
+    float: left;
+    align-items: left;
+    width: 175px;
+    background-color: #cccccc35;
+    border-right: solid gray;
+    padding: 10px;
 
 }
+
+.filter input[type="text"] {
+    width: 125px;
+}
+
+#select {
+    width: 17px;
+}
+
+#items {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.itemContainer{
+    max-width: 30%;
+    align-self: start;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.itemImage {
+    max-width: 90%;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.itemButton {
+    width: 100%;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    
+}
+
 

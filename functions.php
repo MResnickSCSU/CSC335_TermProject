@@ -1,13 +1,13 @@
 <?php
 //connection functions
-    function getConnection() {
-		$conn = new mysqli("localhost", "root","password","projectdata");
-		if ($conn->connect_errno) {
-            printf("Connection failed: %s\n", $conn->connect_error);
-            exit();
-            }
-        return $conn;
-    }
+function getConnection() {
+	$conn = new mysqli("localhost", "root","password","projectdata");
+	if ($conn->connect_errno) {
+        printf("Connection failed: %s\n", $conn->connect_error);
+        exit();
+        }
+    return $conn;
+}
 
 function execSingleResult($sql) {
     $conn = getConnection();
@@ -58,15 +58,37 @@ function checkLogin($username, $pw) {
     return execResults($sql);
 }
 
-function logoutUser() {
-    if ($_SESSION['username']) { //TODO: swap with isset.
-        $sql = "update users set loggedIn = 0 WHERE username= '".$_SESSION['username']."'";
-        execNoResult($sql);
-        $_SESSION['username'] = "";
-        header('Refresh: 1; URL = home.php');
-    }
-    else {
-        return "No login found!";
-    }
+//get all items 
+function getAllItems() {
+    $sql = "Select * from items;";
+    return execResults($sql);
+}
 
+//get single item
+function getItem($itemId) {
+    $sql = "Select * from items where item_id = ".$itemId;
+    return execSingleResult($sql);
+}
+
+//filter functions
+function categoryFilter($filterArray) {
+    $count = 0;
+    $sql = "Select * from items where";
+    foreach ($filterArray as $filter => $value) {
+        if (!empty($value)) {
+            if ($count > 0) $sql .= "AND";
+            if ($filter == "minPrice") {
+                $sql .= " price >= {$value} ";
+            }
+            else if ($filter == "maxPrice") {
+                $sql .= " price <= {$value} ";
+            }
+            else {
+                $sql .= " {$filter} = '{$value}' ";
+            }
+            $count ++;
+        }
+    }
+    echo "<script>console.log(".json_encode($sql).")</script>";
+    return execResults($sql);
 }

@@ -16,22 +16,25 @@
             else {
                 createUser($_POST['fName'], $_POST['lName'], $_POST['username'], $_POST['pw']);
                 $_SESSION['username'] = $_POST['username'];
-                header( 'Location: home.php' );
+                header( 'Location: index.php' );
                 }
             }
+        if (isset($_POST['logIn'])) 
+            header( 'Location: logIn.php');
 ?>
 
 <html>
 <head>
     <link rel="stylesheet" href="furniture.css">
+    <title>Sign Up</title>
 </head>
 
 <body> 
     <div class="top">
         <span id="title">Furniture Store</span>
     </div>
-    <div class="logInBox">
-        <form class="loginBox" role="form" action="" method="post">
+    <div class="body">
+        <form role="form" action="" method="post">
             <label for="fName">First Name:</label>
             <br>
             <input id="fName" name="fName" type="text" class="loginInput"/>
@@ -49,7 +52,8 @@
             <input id="username" name="username" class="loginInput" type="text" />
 
             <br><br>
-            <button href="" name="createUser" class="logInButton">Create new user</button>
+            <button name="createUser" class="logInButton">Create New User</button>
+            <button name="logIn" class="logInButton">Log In Instead</button>
             <br><br>
             <span class="loginError"><?php echo $creationError; ?></span>
         </form>
