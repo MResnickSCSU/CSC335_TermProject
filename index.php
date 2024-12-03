@@ -49,6 +49,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="furniture.css"> 
+        <link rel="stylesheet" href="shopItems.css"> 
         <title>
             Homepage
         </title>
@@ -59,7 +60,8 @@
         <div class="top">
             <div id="title">Furniture Store</div>
             <div class="accountButton">
-                <a href="logOut.php" name="logOut" class="logInButton">Log Out</a>
+                <a href="cart.php" class="logInButton">Cart</a>
+                <a href="logOut.php" class="logInButton">Log Out</a>
             </div>
         </div>
         <div class="body">

@@ -18,7 +18,7 @@
                         }
                         else {
                             $_SESSION['username'] = $_POST['username'];
-                            header( 'Location: index.html' );
+                            header( 'Location: index.php' );
                         }
                     } 
                 }

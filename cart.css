@@ -1,0 +1,58 @@
+.body {
+    padding: 15px;
+}
+
+.items{
+    display: block;
+}
+
+.itemContainer {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+
+.itemInfo {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+.title {
+    font-size: 30px;
+}
+
+.image {
+    width: 50%;
+    max-height: 40vh;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+#text {
+}
+
+#quantity {
+    width: 30px;
+}    
+
+#putHoldButton {
+    float: right;
+}
+
+#placeOrderContainer {
+    display: block;
+    margin-top: 40px;
+    padding: 2px;
+}
+
+#totalPrice {
+    font-size: 30px;
+}
+
+#placeOrderButton {
+    width: 30%;
+    font-size: 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}

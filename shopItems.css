@@ -1,0 +1,51 @@
+.filter{
+    float: left;
+    align-items: left;
+    width: 175px;
+    background-color: #cccccc35;
+    border-right: solid gray;
+    padding: 10px;
+
+}
+
+.filter input[type="text"] {
+    width: 125px;
+}
+
+#select {
+    width: 17px;
+}
+
+#items {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.itemContainer{
+    max-width: 30%;
+    align-self: start;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.itemImage {
+    max-width: 90%;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.itemButton {
+    width: 100%;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.itemButton:hover {
+    font-size: 16px;
+}
+
+

@@ -3,6 +3,7 @@
     require 'functions.php';
     $itemId = $_SESSION['itemId'];
 
+
     $item = getItem($itemId);
     $title = ucfirst($item['item_name']);
     $imagePath = $item['image_path'];
@@ -12,8 +13,13 @@
     $description = ucfirst($item['description']);
     $amount_current = $item['amount_current'];
 
-    //echo "<script>console.log(".json_encode($quantity).")</script>";
 
+    if (isset($_POST['putHold']) && ($_POST['quantity'] !== 0)) { 
+        for ($i = $_POST['quantity']; $i !== 0; $i--) {
+            addItemToCart($itemId);
+        }
+        header( 'Location: cart.php' );
+    }
 
 ?>
 
@@ -31,7 +37,8 @@
         <div class="top">
             <div id="title">Furniture Store</div>
             <div class="accountButton">
-                <a href="logOut.php" name="logOut" class="logInButton">Log Out</a>
+                <a href="cart.php" class="logInButton">Cart</a>
+                <a href="logOut.php" class="logInButton">Log Out</a>
             </div>
         </div>
         <div class="body">
@@ -46,29 +53,13 @@
                 </div>  
                 <div> $<?php echo $price ?> </div>
                 <br>
-                Quantity
-                <div id="quantityButtons">
-                    <button onclick="quantityMinus()">-</button>
-                    <span id="quantity">0</span>
-                    <button onclick="quantityPlus()">+</button>
-                </div>
+                <form method="post">
+                    Quantity:
+                    <input type="number" name="quantity" id="quantity" min="0" max=<?php echo $amount_current ?>></input>
+
+                    <input id="putHoldButton" type="submit" name="putHold" value="Add to Cart"> 
+                </form>
             </div>
         </div>
     </body>
 </html>
-
-<script>
-    let quantity = 0;
-    let quantityDisplay = document.getElementById("quantity");
-
-    function quantityMinus() {
-        if (quantity == 0) {return}
-        quantity--;
-        quantityDisplay.innerText = ""+quantity;
-    }
-    function quantityPlus() {
-        quantity++;
-        quantityDisplay.innerText = ""+quantity;
-    }
-
-</script>

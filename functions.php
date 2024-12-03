@@ -58,6 +58,11 @@ function checkLogin($username, $pw) {
     return execResults($sql);
 }
 
+//get user id 
+
+function getUserId($username){
+    return execSingleResult("select user_id from users where username = '".$username."'")['user_id'];
+}
 //get all items 
 function getAllItems() {
     $sql = "Select * from items;";
@@ -91,4 +96,53 @@ function categoryFilter($filterArray) {
     }
     echo "<script>console.log(".json_encode($sql).")</script>";
     return execResults($sql);
+}
+
+//put item on hold
+function addItemToCart($itemId) {
+    $userId = getUserId($_SESSION['username']);
+    execNoResult("insert into cart (item_id, user_id) values (".$itemId.", ".$userId.")");
+}
+
+//get all items in cart 
+function getCartItems() {
+    $userId = getUserId($_SESSION['username']);
+    $itemIdsQuery = execResults("select item_id from cart where user_id = ".$userId);
+
+    //array of itemIds only one
+    $itemIds = [];
+    foreach ($itemIdsQuery as $itemId) {
+        if (!in_array($itemId['item_id'], $itemIds)) {
+            $itemIds[] = $itemId['item_id'];
+        }
+    }
+
+    //get count of how many times itemId in cart 
+    $results = [];
+    foreach ($itemIds as $itemId) {
+        $count = execSingleResult("select count(*) as count from cart where item_id = ".$itemId)['count'];
+        $results[] = ["item_id" => $itemId,
+                      "count" => $count];
+    }
+
+    return $results;
+}
+
+//change cart amount 
+function cartAmountSubstract($itemId) {
+    $userId = getUserId($_SESSION['username']);
+    $cartId = execSingleResult("select cart_id from cart where user_id = ".$userId." and item_id = ".$itemId." limit 1")['cart_id'];
+    execNoResult("delete from cart where cart_id = ".$cartId);
+}
+
+//place full order
+function placeOrder() {
+    $userId = getUserId($_SESSION['username']);
+    $items = execResults("select item_id from cart where user_id = ".$userId);
+
+    foreach ($items as $item) {
+        $itemId = $item['item_id'];
+        execNoResult("insert into layaway values (".$userId.", ".$itemId.")");
+    }
+
 }
