@@ -91,6 +91,10 @@ create role DB_ADMIN;
 create role EMPLOYEE;
 create role CUSTOMER;
 
+create user 'admin_user'@'%' identified by 'AdminSecurePass!';
+grant DB_Admin to 'admin_user'@'%';
+
+
 # Assigning roles and permissions
 grant select, insert, update on users to DB_ADMIN;
 grant select, insert, update on items to DB_ADMIN;
