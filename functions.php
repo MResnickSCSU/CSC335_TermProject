@@ -1,7 +1,7 @@
 <?php
 //connection functions
 function getConnection() {
-	$conn = new mysqli("localhost", "root","password","projectdata");
+	$conn = new mysqli("localhost", "root","password", "furniture");
 	if ($conn->connect_errno) {
         printf("Connection failed: %s\n", $conn->connect_error);
         exit();
@@ -146,3 +146,4 @@ function placeOrder() {
     }
 
 }
+
