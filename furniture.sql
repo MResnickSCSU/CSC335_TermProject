@@ -78,3 +78,117 @@ VALUES
 ('Smoked Glass Vase  Set', 'decorations', 'blue', 'decoration3.jpg', 49.99, 'Comfortable throw pillow.', 30),
 ('Bulb Vase', 'decorations', 'brown', 'decoration4.jpg', 14.99, 'Classic photo frame.', 18),
 ('Cricle Cut-Out Vase', 'decorations', 'white', 'decoration5.jpg', 59.99, 'Decorative candle holder.', 12);
+
+#creating an admin user 
+insert into users (fname, lname, email, username, pw, userType) 
+values("DB","Admin","ITAdmin@example.com","IT_Admin","password1","Admin");
+#ensure that this default password is changed
+
+
+
+# Role Creation
+create role DB_ADMIN;
+create role EMPLOYEE;
+create role CUSTOMER;
+
+# Assigning roles and permissions
+grant select, insert, update on users to DB_ADMIN;
+grant select, insert, update on items to DB_ADMIN;
+grant select, insert, update on cart to DB_ADMIN;
+grant select, insert, update on layaway to DB_ADMIN;
+
+grant select, update on users to EMPLOYEE;
+grant select, update on items to EMPLOYEE;
+grant select, update on cart to EMPLOYEE;
+grant select, insert, update on layaway to EMPLOYEE;
+
+grant select, update on users to CUSTOMER;
+grant select on items to CUSTOMER;
+grant select, insert, update on cart to CUSTOMER;
+grant select, insert, update on layaway to CUSTOMER;
+
+#view creating
+#admin user
+create view view_admin_user 
+	as select  user_id, fname, lname, email, username, userType 
+    from users ;
+
+#admin items
+create view view_admin_items 
+	as select item_name, category, color, image_path, price, 
+    description, amount_current  
+    from items ;
+
+#admin cart    
+create view view_admin_cart
+	as select cart_id, item_id, user_id from cart ;
+
+#admin layaway    
+create view view_admin_layaway 
+	as select user_id, item_id, item_name from layaway;
+    
+#employee users
+create view view_employee_users 
+	as select user_id, fname, lname, email, username 
+    from users
+    where user_type = (select user_type from users);
+
+#employee items
+create view view_employee_items 
+	as select item_name, item_id, category, color, price,
+    description, amount_current  
+    from items ;
+
+#employee cart    
+create view view_employee_cart
+	as select cart_id, item_id, 
+   #item_name, 
+    user_id
+    from cart ;
+
+#employee layaway    
+create view view_employee_layaway 
+	as select user_id, item_id 
+    #,item_name 
+    from layaway;
+    
+#create view view_customer_users
+#	as select user_id, fname, lname, email, username from users
+#		where user_id = (select current_user_id from users);
+
+#customer items
+create view view_customer_items 
+	as select item_name, item_id, category, color, price,
+    description  
+    from items 
+    where amount_current > 1;
+
+#customer cart    
+create view view_customer_cart
+	as select cart_id, item_id 
+    #,item_name 
+    from cart 
+    where cart.user_id = (select user_id from users);
+
+#customer layaway    
+create view view_customer_layaway 
+	as select item_id 
+    #,item_name 
+    from layaway
+    where layaway.user_id = (select user_id from users);
+
+# view granting
+grant select on view_admin_users to DB_ADMIN;
+grant select on view_admin_items to DB_ADMIN;
+grant select on view_admin_cart to DB_ADMIN;
+grant select on view_admin_layaway to DB_ADMIN;
+
+grant select on view_employee_users to EMPLOYEE;
+grant select on view_employee_items to EMPLOYEE;
+grant select on view_employee_cart to EMPLOYEE;
+grant select on view_employee_layaway to EMPLOYEE;
+
+grant select on view_customer_users to CUSTOMER;
+grant select on view_customer_items to CUSTOMER;
+grant select on view_customer_cart to CUSTOMER;
+grant select on view_customer_layaway to CUSTOMER;
