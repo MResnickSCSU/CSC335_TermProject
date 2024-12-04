@@ -9,7 +9,7 @@ create table users (
 	lName varchar(50),
 	email varchar(255),
 	username varchar(50),
-	pw varchar(50),
+	pw char(32),
     userType varchar(25)
 );
 
@@ -81,7 +81,7 @@ VALUES
 
 #creating an admin user 
 insert into users (fname, lname, email, username, pw, userType) 
-values("DB","Admin","ITAdmin@example.com","IT_Admin","password1","Admin");
+values("DB","Admin","ITAdmin@example.com","IT_Admin",md5("password1"),"Admin");
 #ensure that this default password is changed
 
 
