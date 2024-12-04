@@ -98,8 +98,8 @@
 
                 Price: 
                 <br>
-                <input id="filterInput" type="text" name="minPrice" placeholder="Min">
-                <input id="filterInput" type="text" name="maxPrice" placeholder="Max">
+                <input id="filterInput" type="number" min="0" name="minPrice" placeholder="Min">
+                <input id="filterInput" type="number" min="0" name="maxPrice" placeholder="Max">
             
                 <br><br>
                 <button type="submit" name="filterButton">Filter</button>
