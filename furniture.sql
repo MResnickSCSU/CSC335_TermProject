@@ -1,3 +1,5 @@
+drop database furniture;
+
 create database if not exists furniture;
 use furniture;
 

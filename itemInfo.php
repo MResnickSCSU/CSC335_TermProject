@@ -14,11 +14,13 @@
     $amount_current = $item['amount_current'];
 
 
-    if (isset($_POST['putHold']) && ($_POST['quantity'] !== 0)) { 
-        for ($i = $_POST['quantity']; $i !== 0; $i--) {
+    if (isset($_POST['putHold'])) { 
+        if (!is_numeric($_POST['quantity'])) {$i = 1;}
+        else {$i = $_POST['quantity'];}
+        for ($i; $i !== 0; $i--) {
             addItemToCart($itemId);
         }
-        header( 'Location: cart.php' );
+        header("Location: index.php");
     }
 
 ?>
@@ -35,7 +37,7 @@
     </head>
     <body>
         <div class="top">
-            <div id="title">Furniture Store</div>
+            <a href="index.php" id="title">Furniture Store</a>
             <div class="accountButton">
                 <a href="cart.php" class="logInButton">Cart</a>
                 <a href="logOut.php" class="logInButton">Log Out</a>
@@ -55,7 +57,7 @@
                 <br>
                 <form method="post">
                     Quantity:
-                    <input type="number" name="quantity" id="quantity" min="0" max=<?php echo $amount_current ?>></input>
+                    <input type="number" name="quantity" id="quantity" placeholder="1" min="1" max=<?php echo $amount_current ?>></input>
 
                     <input id="putHoldButton" type="submit" name="putHold" value="Add to Cart"> 
                 </form>

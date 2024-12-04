@@ -5,7 +5,12 @@ require 'functions.php';
     //echo "<script>console.log(".json_encode($cartItems).");</script>";
 
 $cartItems = getCartItems();
-addItems($cartItems); 
+if (empty($cartItems)) {
+    global $results; 
+    $results = "Cart Is Empty";
+    header("Refresh: 3; url= index.php ");
+}
+else {addItems($cartItems);}
 
 function addItems($cartItems) {
     global $results;
@@ -35,12 +40,21 @@ function addItems($cartItems) {
                 </form>
             </div>
         </div>';
-        }
+    }
+    $results .= 
+    '<div id="placeOrderContainer">
+            <form method="post">
+                <span id="totalPrice">Total:'.$totalPrice.'</span>
+                <br>
+                <button type="submit" id="placeOrderButton" name="placeOrder">Place Order</button>
+            </form>
+    </div>';
     }
 
     if (isset($_POST['plus'])) {
         header("Refresh:0");
-        addItemToCart($_POST['plus']);
+        if (amountInCart($_POST['plus']) == availableAmount($_POST['plus'])) {return;}
+        else {addItemToCart($_POST['plus']);}
     }
     if (isset($_POST['minus'])) {
         header("Refresh:0");
@@ -49,6 +63,7 @@ function addItems($cartItems) {
 
     if (isset($_POST['placeOrder'])) {
         placeOrder();
+        header("Location: index.php");
     }
 
 ?>
@@ -59,13 +74,13 @@ function addItems($cartItems) {
 		<link rel="stylesheet" href="furniture.css"> 
         <link rel="stylesheet" href="cart.css"> 
         <title>
-            Info
+            Cart
         </title>
 
     </head>
     <body>
         <div class="top">
-            <div id="title">Furniture Store</div>
+            <a href="index.php" id="title">Furniture Store</a>
             <div class="accountButton">
                 <a href="logOut.php" class="logInButton">Log Out</a>
             </div>
@@ -73,12 +88,6 @@ function addItems($cartItems) {
         <div class="body">
             <div id="results">
                 <?php echo $results ?>
-                <div id="placeOrderContainer">
-                    <form method="post">
-                        <span id="totalPrice">Total: <?php echo $totalPrice ?></span>
-                        <br>
-                        <button type="submit" id="placeOrderButton" name="placeOrder">Place Order</button>
-                    </form>
             </div>
         </div>
     </body>

@@ -12,6 +12,11 @@ body {
     display: flex;
 }
 
+#title {
+    text-decoration: none;
+    color: black;
+}
+
 .accountButton {
     margin-left: auto;
     display: flex;

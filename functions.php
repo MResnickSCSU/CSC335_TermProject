@@ -65,7 +65,7 @@ function getUserId($username){
 }
 //get all items 
 function getAllItems() {
-    $sql = "Select * from items;";
+    $sql = "Select * from items where amount_current != 0";
     return execResults($sql);
 }
 
@@ -103,7 +103,10 @@ function addItemToCart($itemId) {
     $userId = getUserId($_SESSION['username']);
     execNoResult("insert into cart (item_id, user_id) values (".$itemId.", ".$userId.")");
 }
-
+//get amount in cart from id 
+function amountInCart($itemId) {
+    return execSingleResult("select count(*) as count from cart where item_id = ".$itemId)['count'];
+}
 //get all items in cart 
 function getCartItems() {
     $userId = getUserId($_SESSION['username']);
@@ -120,7 +123,7 @@ function getCartItems() {
     //get count of how many times itemId in cart 
     $results = [];
     foreach ($itemIds as $itemId) {
-        $count = execSingleResult("select count(*) as count from cart where item_id = ".$itemId)['count'];
+        $count = amountInCart($itemId);
         $results[] = ["item_id" => $itemId,
                       "count" => $count];
     }
@@ -135,6 +138,12 @@ function cartAmountSubstract($itemId) {
     execNoResult("delete from cart where cart_id = ".$cartId);
 }
 
+//get available amount of item 
+function availableAmount($itemId) {
+    return execSingleResult("select amount_current from items where item_id = ".$itemId)['amount_current'];
+}
+
+
 //place full order
 function placeOrder() {
     $userId = getUserId($_SESSION['username']);
@@ -143,7 +152,11 @@ function placeOrder() {
     foreach ($items as $item) {
         $itemId = $item['item_id'];
         execNoResult("insert into layaway values (".$userId.", ".$itemId.")");
+        $amount = execSingleResult("select amount_current from items where item_id = ".$itemId)['amount_current'];
+        $amount--;
+        execNoResult("update items set amount_current = ".$amount." where item_id = ".$itemId);
     }
 
+    execNoResult("delete from cart where user_id = ".$userId);
 }
 

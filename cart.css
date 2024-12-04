@@ -50,7 +50,7 @@
 }
 
 #placeOrderButton {
-    width: 30%;
+    min-width: 30%;
     font-size: 30px;
     border-radius: 6px;
     cursor: pointer;
