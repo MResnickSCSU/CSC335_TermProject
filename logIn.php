@@ -3,7 +3,7 @@
             require 'functions.php';
             $logInError = '';
             if (isset($_SESSION['username'])) {
-                header( 'Location: index.html' ); 
+                header( 'Location: index.php' ); 
             }
             if (isset($_POST['logIn'])) {
                 if (empty($_POST['username']) || empty($_POST['pw'])) {
