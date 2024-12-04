@@ -16,15 +16,19 @@
     width: 17px;
 }
 
-#items {
+.itemsContainer {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
+}
+#items {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .itemContainer{
+    padding: 10px;
     max-width: 30%;
     align-self: start;
     margin-bottom: 15px;

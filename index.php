@@ -39,7 +39,8 @@
             );
             echo "<script>console.log(".json_encode($filterArray).")</script>";
             $items = categoryFilter($filterArray);
-            addItems($items);
+            if (empty($items)) {$results = "No Items Fitting Criteria";}
+            else {addItems($items);}
         }
     }
 ?>
@@ -66,9 +67,6 @@
         </div>
         <div class="body">
             <div class="filter">
-                <input type="text" id="itemSearch" placeholder="Search..."></input>
-                <br><br> 
-
                 <form role="form" action="" method="post">
 
                 Category:
