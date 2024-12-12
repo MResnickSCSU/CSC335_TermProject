@@ -1,5 +1,7 @@
 Furniture Store Project By Febian Reyes and Matthew Resnick
 
+- Insert porject folder under xampp/ htdocs/ 
+
 - Run the furniture.sql file in MySQL Workbench.
 
 - Start on the logIn.php page. 
